@@ -4,8 +4,6 @@ import numpy as np
 import calendar
 from supabase import create_client
 
-
-@st.cache_resource
 def require_password():
     if "authenticated" not in st.session_state:
         st.session_state.authenticated = False
