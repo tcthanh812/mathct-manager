@@ -1,5 +1,3 @@
 streamlit
-supabase=1.25.12
-streamlit
-openai
-langchain
+supabase
+
