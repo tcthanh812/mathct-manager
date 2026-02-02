@@ -549,6 +549,15 @@ with tab_sessions:
         # Keep for monthly totals across all classes
         edited_all_for_totals.append(edited_g[["session_id", "actual_duration_hours", "fee_raw"]].copy())
 
+        # Per-class total right under the table
+        class_total_money = float(pd.to_numeric(edited_g["fee_raw"], errors="coerce").fillna(0.0).sum() * 1000)
+        class_total_hours = float(pd.to_numeric(edited_g["actual_duration_hours"], errors="coerce").fillna(0.0).sum())
+        class_total_sessions = int(len(edited_g[edited_g['actual_duration_hours']>0]))
+
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Sessions", class_total_sessions)
+        c2.metric("Total hours", round(class_total_hours, 2))
+        c3.metric("Total money", f"{int(round(class_total_money)):,}")
         # Save button directly under this table (per class)
         if st.button("Save changes", type="primary", key=f"save_class_{cid}"):
             _save_class_changes(
